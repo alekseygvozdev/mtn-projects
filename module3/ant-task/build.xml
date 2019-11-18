@@ -42,7 +42,7 @@
     </junit>
     </target>
 
-    <target name="jar" depends="compile">
+    <target name="jar" depends="test">
          <jar destfile="build/Hello.jar" basedir="build/classes">
             <manifest>
                 <attribute name="Main-Class" value="com.test.Project" />
