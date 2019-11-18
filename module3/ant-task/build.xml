@@ -1,0 +1,57 @@
+<project default="run">
+
+    <target name="clean">
+        <delete dir="build" />
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="build/classes" />
+        <javac srcdir="src" destdir="build/classes" debug="on" includeantruntime="yes">
+		<classpath>
+			<pathelement path="build/classes"/>
+			<pathelement path="lib/commons-collections-3.2.1.jar"/>
+		</classpath>
+	</javac>
+    </target>
+    
+    <target name="test-compile">
+	<mkdir dir="build/test-classes" />
+	<javac srcdir="test" destdir="build/test-classes" includeantruntime="yes">
+	<classpath>
+	    <pathelement path="build/classes"/>
+	    <pathelement path="lib/junit-4.11.jar"/>
+	</classpath>
+	</javac>
+    </target>
+    
+    <target name="test" depends="compile,test-compile">
+    <mkdir dir="build/test-reports"/>
+    <junit printsummary="yes" haltonfailure="yes" fork="true" forkmode="once">
+	<classpath>
+	    <fileset dir="lib" includes="*.jar" />
+	    <pathelement path="build/classes"/>
+	    <pathelement path="build/test-classes"/>
+	</classpath>
+	<formatter type="xml"/>
+	<formatter type="plain"/>
+	<batchtest fork="yes" todir="build/test-reports">
+	    <fileset dir="test">
+		<include name="**/*Test*.java"/>
+	    </fileset>
+	</batchtest>
+    </junit>
+    </target>
+
+    <target name="jar" depends="compile">
+         <jar destfile="build/Hello.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.test.Project" />
+            </manifest>
+         </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="build/Hello.jar" fork="true" />
+    </target>
+
+</project>
