@@ -22,6 +22,12 @@
     	     <scope>test</scope>
 	</dependency>
     </dependencies>
+    <distributionManagement>
+    	<repository>
+    		<id>nexus</id>
+    		<url>http://192.168.56.102/repository/maven-releases/</url>
+    	</repository>
+    </distributionManagement>
     <properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -48,6 +54,17 @@
         		</archive>
     		</configuration>
   		</plugin>
+		<plugin>
+ 			<groupId>org.sonatype.plugins</groupId>
+			<artifactId>nexus-staging-maven-plugin</artifactId>
+        		<version>1.6.3</version>
+        		<extensions>true</extensions>
+			<configuration>
+                        <serverId>nexus</serverId>
+                        <nexusUrl>http://192.168.56.102/</nexusUrl>
+                        <skipStaging>true</skipStaging>
+   			</configuration>
+        	</plugin>	
          </plugins>
     </build>
 </project>
